@@ -13,9 +13,9 @@ groups:
 
 
 - name: NodeMemUsgae
-   rules:
+  rules:
     - alert: HostMemoryIsUnderutilized
-      expr: ({__name__="node_memory_MemAvailable_bytes", instance="node-exporter:9100", job="node"} > 80)
+      expr: 100 - ((node_memory_MemAvailable_bytes{instance="node-exporter:9100", job="node"} * 100) / node_memory_MemTotal_bytes{instance="node-exporter:9100", job="node"}) < 20
       for: 15s
       labels:
         severity: critical
